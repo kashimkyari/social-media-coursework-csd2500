@@ -1,3 +1,11 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-${{ ubuntu-version }} # is Ubuntu environment
@@ -5,12 +13,10 @@ jobs:
     # ... some other config ...
 
     steps:
-    - # ... some prepare steps, like action/checkout, run some script without MySQL, etc.
-
+    
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
 
-    - # ... some steps before set-up MySQL ...
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
@@ -24,6 +30,5 @@ jobs:
           mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
           mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
           mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
-    - # ... some steps after set-up MySQL ...
-
+    
     # ... some another config ...
